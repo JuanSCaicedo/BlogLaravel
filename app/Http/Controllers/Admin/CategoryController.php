@@ -31,7 +31,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'slug'  => 'required|unique:categories'
+        ]);
+
+        
+        $category = Category::create($request->all());
+
+        return redirect()->route('admin.categories.edit', $category);
     }
 
     /**
