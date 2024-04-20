@@ -13,7 +13,7 @@
             @csrf
             @method('put')
 
-            {{-- @include('admin.posts.partials.form') --}}
+            @include('admin.posts.partials.form')
 
             <input type="submit" class="btn btn-primary" value="Crear post">
         </form>

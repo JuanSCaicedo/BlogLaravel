@@ -25,9 +25,9 @@
 
     <select name="category_id" id="category_id" class="form-control">
         <option value="" selected disabled>-- Seleccione --</option>
-        @foreach ($categories as $key => $category)
-            <option value="{{ $key }}" @if (old('category_id') == $key || (isset($post) && $post->category == $key)) selected @endif>
-                {{ $category }}
+        @foreach ($categories as $id => $name)
+            <option value="{{ $id }}" @if (old('category_id') == $id || (isset($post) && $post->category_id == $id)) selected @endif>
+                {{ $name }}
             </option>
         @endforeach
     </select>
@@ -43,7 +43,7 @@
     @foreach ($tags as $tag)
         <label class="mr-2">
             <input type="checkbox" id="{{ $tag->id }}" name="tags[]" value="{{ $tag->id }}"
-                {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                {{ in_array($tag->id, $selectedTags) ? 'checked' : '' }}>
             <label for="{{ $tag->id }}">{{ $tag->name }}</label>
         </label>
     @endforeach
@@ -78,7 +78,11 @@
 <div class="row mb-3">
     <div class="col">
         <div class="image-wraper">
-            <img id="picture" src="{{ env('IMG_ALTERNATIVA') }}" alt="alerna">
+            @if ($post->image)
+            <img id="picture" src="{{ Storage::url($post->image->url) }}" alt="alerna">
+            @else
+                <img id="picture" src="{{ env('IMG_ALTERNATIVA') }}" alt="alerna">
+            @endif
         </div>
     </div>
     <div class="col">
@@ -115,7 +119,6 @@
         <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
-
 
 @section('css')
     <style>

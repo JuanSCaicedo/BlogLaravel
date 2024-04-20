@@ -71,10 +71,10 @@ class PostController extends Controller
     {
         $categories = Category::pluck('name', 'id');
         $tags = Tag::all();
-        
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        $selectedTags = $post->tags->pluck('id')->toArray(); // Obtener los ID de las etiquetas del post
+        return view('admin.posts.edit', compact('post', 'categories', 'tags', 'selectedTags'));
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
