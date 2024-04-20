@@ -1,5 +1,3 @@
-<input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-
 <div class="form-group mb-2">
     <label for="name">Nombre</label>
     <input name="name" id="name" type="text" class="form-control"

@@ -12,6 +12,8 @@
             <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
+                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+
                 @include('admin.posts.partials.form')
 
                 <input type="submit" class="btn btn-primary" value="Crear post">
