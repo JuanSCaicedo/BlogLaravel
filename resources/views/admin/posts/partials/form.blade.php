@@ -43,7 +43,7 @@
     @foreach ($tags as $tag)
         <label class="mr-2">
             <input type="checkbox" id="{{ $tag->id }}" name="tags[]" value="{{ $tag->id }}"
-                {{ in_array($tag->id, $selectedTags) ? 'checked' : '' }}>
+                {{ isset($selectedTags) && in_array($tag->id, $selectedTags) ? 'checked' : '' }}>
             <label for="{{ $tag->id }}">{{ $tag->name }}</label>
         </label>
     @endforeach
@@ -78,11 +78,11 @@
 <div class="row mb-3">
     <div class="col">
         <div class="image-wraper">
-            @if ($post->image)
+            @isset ($post->image)
             <img id="picture" src="{{ Storage::url($post->image->url) }}" alt="alerna">
             @else
                 <img id="picture" src="{{ env('IMG_ALTERNATIVA') }}" alt="alerna">
-            @endif
+            @endisset
         </div>
     </div>
     <div class="col">
