@@ -2,11 +2,11 @@
 
     <div class="container py-8">
         <h1 class="text-4xl font-bold text-gray-600">
-            {{$post->name}}
+            {{ $post->name }}
         </h1>
 
         <div class="text-lg text-gray-500 m-1">
-            {{$post->extract}}
+            {!! $post->extract !!}
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -15,11 +15,17 @@
             <div class="md:col-span-2">
 
                 <figure>
-                    <img class="w-full h-80 object-cover object-center" src="{{Storage::url($post->image->url)}}" alt="imagen post">
+                    @if ($post->image)
+                        <img class="w-full h-80 object-cover object-center" src="{{ Storage::url($post->image->url) }}"
+                            alt="imagen post">
+                    @else
+                        <img class="w-full h-80 object-cover object-center"
+                            src="https://cdn.pixabay.com/photo/2024/02/15/16/57/cat-8575768_1280.png" alt="imagen post">
+                    @endif
                 </figure>
 
                 <div class="text-base text-gray-500 mt-4">
-                    {{$post->body}}
+                    {!! $post->body !!}
                 </div>
 
             </div>
@@ -27,15 +33,22 @@
             {{-- contenido relacionado --}}
             <aside>
                 <h1 class="text-2xl font-bold text-gray-600 mb-4">
-                    Más en {{$post->category->name}}
+                    Más en {{ $post->category->name }}
                 </h1>
 
                 <ul>
                     @foreach ($similares as $similar)
                         <li class="mb-4">
-                            <a class="flex" href="{{route('posts.show', $similar)}}">
-                                <img class="w-36 h-21 object-cover object-center" src="{{Storage::url($similar->image->url)}}" alt="">
-                                <span class="ml-2 text-gray-600">{{$similar->name}}</span>
+                            <a class="flex" href="{{ route('posts.show', $similar) }}">
+                                @if ($similar->image)
+                                    <img class="w-36 object-cover object-center"
+                                        src="{{ Storage::url($similar->image->url) }}" alt="">
+                                @else
+                                    <img class="w-36 h-24 object-cover object-center"
+                                        src="https://cdn.pixabay.com/photo/2024/02/15/16/57/cat-8575768_1280.png"
+                                        alt="">
+                                @endif
+                                <span class="ml-2 text-gray-600">{{ $similar->name }}</span>
                             </a>
                         </li>
                     @endforeach

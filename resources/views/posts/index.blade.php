@@ -6,19 +6,20 @@
 
             @foreach ($posts as $post)
                 <article class="w-full h-80 bg-cover bg-center @if ($loop->first) md:col-span-2 @endif"
-                    style="background-image: url({{ Storage::url($post->image->url) }})">
+                    style="background-image: url(@if ($post->image) {{ Storage::url($post->image->url) }} @else https://cdn.pixabay.com/photo/2024/02/15/16/57/cat-8575768_1280.png @endif)">
                     <div class="w-full h-full px-8 flex flex-col justify-center">
 
                         <div>
                             @foreach ($post->tags as $tag)
-                                <a href="{{route('posts.tag', $tag)}}" class="inline-block px-3 h-6 bg-{{$tag->color}}-600 text-white rounded-full m-1">
+                                <a href="{{ route('posts.tag', $tag) }}"
+                                    class="inline-block px-3 h-6 bg-{{ $tag->color }}-600 text-white rounded-full m-1">
                                     {{ $tag->name }}
                                 </a>
                             @endforeach
                         </div>
 
                         <h1 class="text-4xl text-white leading-8 font-bold mt-2">
-                            <a href="{{route('posts.show', $post)}}">
+                            <a href="{{ route('posts.show', $post) }}">
                                 {{ $post->name }}
                             </a>
                         </h1>
@@ -29,7 +30,7 @@
         </div>
 
         <div class="mt-4">
-            {{$posts->links()}}
+            {{ $posts->links() }}
         </div>
 
     </div>
