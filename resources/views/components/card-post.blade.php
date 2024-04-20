@@ -6,7 +6,7 @@
             alt="posts">
     @else
         <img class="w-full object-cover object-center" style="height: 18rem;"
-            src="https://cdn.pixabay.com/photo/2024/02/15/16/57/cat-8575768_1280.png" alt="posts">
+            src="{{ env('IMG_ALTERNATIVA') }}" alt="posts">
     @endif
 
     <div class="px-6 py-4">

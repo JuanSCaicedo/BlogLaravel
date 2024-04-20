@@ -20,7 +20,7 @@
                             alt="imagen post">
                     @else
                         <img class="w-full h-80 object-cover object-center"
-                            src="https://cdn.pixabay.com/photo/2024/02/15/16/57/cat-8575768_1280.png" alt="imagen post">
+                            src="{{ env('IMG_ALTERNATIVA') }}" alt="imagen post">
                     @endif
                 </figure>
 
@@ -45,7 +45,7 @@
                                         src="{{ Storage::url($similar->image->url) }}" alt="">
                                 @else
                                     <img class="w-36 h-24 object-cover object-center"
-                                        src="https://cdn.pixabay.com/photo/2024/02/15/16/57/cat-8575768_1280.png"
+                                        src="{{ env('IMG_ALTERNATIVA') }}"
                                         alt="">
                                 @endif
                                 <span class="ml-2 text-gray-600">{{ $similar->name }}</span>

@@ -1,4 +1,4 @@
-<input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+<input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
 
 <div class="form-group mb-2">
     <label for="name">Nombre</label>
@@ -75,6 +75,29 @@
     @enderror
 </div>
 
+<div class="row mb-3">
+    <div class="col">
+        <div class="image-wraper">
+            <img id="picture" src="{{ env('IMG_ALTERNATIVA') }}" alt="alerna">
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <label for="file">Imagen del post</label><input type="file" name="file" id="file"
+                class="form-control-file" accept="image/*">
+        </div>
+
+        @error('file')
+            <br>
+            <small class="text-danger">{{ $message }}</small>
+        @enderror
+
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus amet quod dignissimos maiores quas, iusto
+            explicabo sed officia aperiam! Nam perspiciatis harum cum magni distinctio recusandae delectus eius magnam
+            suscipit.</p>
+    </div>
+</div>
+
 <div class="form-group">
     <label for="extract">Extracto:</label>
     <textarea name="extract" id="extract" class="form-control">{{ old('extract', isset($post) ? $post->extract : '') }}</textarea>
@@ -92,3 +115,57 @@
         <small class="text-danger">{{ $message }}</small>
     @enderror
 </div>
+
+
+@section('css')
+    <style>
+        .image-wraper {
+            position: relative;
+            padding-bottom: 56.25%;
+        }
+
+        .image-wraper img {
+            position: absolute;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+@stop
+
+@section('js')
+    <script src="{{ asset('vendor/jQuery-Plugin-stringToSlug-1.3/jquery.stringToSlug.min.js') }}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#name").stringToSlug({
+                setEvents: 'keyup keydown blur',
+                getPut: '#slug',
+                space: '-'
+            });
+        });
+
+        ClassicEditor
+            .create(document.querySelector('#extract'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#body'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        document.getElementById("file").addEventListener('change', cambiarImagen);
+
+        function cambiarImagen(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = (event) => {
+                document.getElementById("picture").setAttribute('src', event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+@endsection
