@@ -23,9 +23,11 @@ class PostController extends Controller
         return view('admin.posts.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function all()
+    {
+        return view('admin.posts.all');
+    }
+
     public function create()
     {
         $categories = Category::pluck('name', 'id');

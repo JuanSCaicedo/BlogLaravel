@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\PostController;
 
 Route::get('', [HomeController::class, 'index'])->middleware('can:admin.home')->name('admin.home');
 
+Route::get('posts/all', [PostController::class, 'all'])->middleware('role:Admin')->name('admin.posts.all');
+
 Route::resource('users', UserController::class)
     ->only(['index', 'edit', 'update'])
     ->names('admin.users')

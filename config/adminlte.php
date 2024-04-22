@@ -354,6 +354,12 @@ return [
             'route' => 'admin.posts.create',
             'can' => 'admin.posts.create'
         ],
+        [
+            'text' => 'Todos los posts',
+            'icon' => 'fas fa-fw fa-globe',
+            'route' => 'admin.posts.all',            
+            'can' => 'admin.posts.all'
+        ],
     ],
 
     /*
