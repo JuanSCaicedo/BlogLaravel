@@ -6,9 +6,11 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Asegúrate de importar AuthorizesRequests
 
 class PostController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
         $posts = Post::where('status', 2)->latest('id')->paginate(8);
@@ -17,6 +19,8 @@ class PostController extends Controller
     }
     public function show(Post $post)
     {
+        $this->authorize('published', $post);
+
         $similares = Post::where('category_id', $post->category_id)->where('id', '!=', $post->id)->where('status', 2)->latest('id')->take(4)->get();
 
         return view('posts.show', compact('post', 'similares'));

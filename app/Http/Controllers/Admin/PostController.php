@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Asegúrate de importar AuthorizesRequests
 
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -68,6 +70,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $this->authorize('author', $post);
+
         $categories = Category::pluck('name', 'id');
         $tags = Tag::all();
         $selectedTags = $post->tags->pluck('id')->toArray(); // Obtener los ID de las etiquetas del post
@@ -79,6 +83,8 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
+        $this->authorize('author', $post);
+
         $post->update($request->all());
     
         if ($request->file('file')) {
@@ -111,6 +117,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('author', $post);
+        
         $post->delete();
 
         return redirect()->route('admin.posts.index', $post)->with('info', 'Post Eliminado Correctamente');

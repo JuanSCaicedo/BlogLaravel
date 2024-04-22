@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PostObserver
 {
-    public function created(Post $post): void
+    public function creating(Post $post): void
     {
-        //
+        if (!\App::runningInConsole()) {
+            $post->user_id = auth()->user()->id;
+        }
     }
     public function deleting(Post $post): void
     {
