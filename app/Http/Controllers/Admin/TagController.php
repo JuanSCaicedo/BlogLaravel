@@ -51,18 +51,6 @@ class TagController extends Controller
 
         return redirect()->route('admin.tags.edit', compact('tag'))->with('info', 'La etiqueta se creó con éxito');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tag $tag)
-    {
-        return view('admin.tags.show', compact('tag'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Tag $tag)
     {
         $colors = [

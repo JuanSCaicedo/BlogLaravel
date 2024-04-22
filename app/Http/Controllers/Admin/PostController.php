@@ -57,17 +57,6 @@ class PostController extends Controller
         return redirect()->route('admin.posts.edit', $post);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Post $post)
-    {
-        return view('admin.posts.show', compact('post'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Post $post)
     {
         $this->authorize('author', $post);
