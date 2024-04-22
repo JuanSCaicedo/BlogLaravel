@@ -97,27 +97,9 @@ class PostController extends Controller
             }
         }
     
-        // Obtener las etiquetas seleccionadas del formulario
-        $selectedTags = $request->tags;
-    
-        // Obtener las etiquetas actualmente asociadas al post
-        $postTags = $post->tags->pluck('id')->toArray();
-    
-        // Etiquetas que han sido deseleccionadas
-        $tagsToDetach = array_diff($postTags, $selectedTags);
-    
-        // Desvincular las etiquetas deseleccionadas
-        if (!empty($tagsToDetach)) {
-            $post->tags()->detach($tagsToDetach);
-        }
-    
-        // Adjuntar las etiquetas seleccionadas si no están asociadas al post
-        if ($selectedTags) {
-            foreach ($selectedTags as $tag) {
-                if (!in_array($tag, $postTags)) {
-                    $post->tags()->attach($tag);
-                }
-            }
+        if($request->tags)
+        {
+            $post->tags()->sync($request->tags);
         }
     
         return redirect()->route('admin.posts.edit', $post)->with('info', 'Post Actualizado Correctamente');
@@ -129,6 +111,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('admin.posts.index', $post)->with('info', 'Post Eliminado Correctamente');
     }
 }
