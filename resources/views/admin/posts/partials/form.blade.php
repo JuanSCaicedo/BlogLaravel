@@ -55,18 +55,38 @@
 <div class="form-group">
     <p class="font-weight-bold">Estado</p>
 
-    <label class="mr-2">
-        <input type="radio" id="status_borrador" name="status" value="1" checked>
-        Borrador
-    </label>
-
-    @can('admin.posts.publish')
-        <label>
-            <input type="radio" id="status_publicado" name="status" value="2"
-                {{ old('status', isset($post) && $post->status == 2 ? 'checked' : '') }}>
+    @if (isset($post) && $post->status == 2)
+        <label class="mr-2">
+            <input type="radio" id="status_borrador" name="status" value="1">
+            Borrador
+            <input type="radio" id="status_borrador" name="status" value="2" checked>
             Publicado
         </label>
-    @endcan
+    @elseif (isset($post) && $post->status == 1)
+        <label class="mr-2">
+            <input type="radio" id="status_borrador" name="status" value="1" checked>
+            Borrador
+            @can('admin.posts.publish')
+                <label>
+                    <input type="radio" id="status_publicado" name="status" value="2"
+                        {{ old('status', isset($post) && $post->status == 2 ? 'checked' : '') }}>
+                    Publicado
+                </label>
+            @endcan
+        </label>
+    @else
+        <label class="mr-2">
+            <input type="radio" id="status_borrador" name="status" value="1" checked>
+            Borrador
+            @can('admin.posts.publish')
+                <label>
+                    <input type="radio" id="status_publicado" name="status" value="2">
+                    Publicado
+                </label>
+            @endcan
+        </label>
+    @endif
+
 
     @error('status')
         <br>

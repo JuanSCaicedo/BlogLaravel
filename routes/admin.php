@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,10 @@ Route::get('posts/all', [PostController::class, 'all'])->middleware('role:Admin'
 Route::resource('users', UserController::class)
     ->only(['index', 'edit', 'update'])
     ->names('admin.users')
+    ->middleware('role:Admin');
+
+Route::resource('roles', RoleController::class)
+    ->names('admin.roles')
     ->middleware('role:Admin');
 
 Route::resource('categories', CategoryController::class)->except('show')

@@ -22,6 +22,7 @@ class PostAll extends Component
     {
         $posts = Post::where('name', 'LIKE', '%' . $this->search . '%')
         ->orWhere('user_id', 'LIKE', '%' . $this->search . '%')
+        ->orWhere('id', 'LIKE', '%' . $this->search . '%')
         ->orWhereHas('user', function ($query) {
             $query->where('name', 'LIKE', '%' . $this->search . '%');
         })

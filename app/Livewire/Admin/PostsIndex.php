@@ -22,6 +22,7 @@ class PostsIndex extends Component
     {
         $posts = Post::where('user_id', auth()->user()->id)
             ->where('name', 'LIKE', '%' . $this->search . '%')
+            ->orWhere('id', 'LIKE', '%' . $this->search . '%')
             ->latest('id')
             ->paginate();
 
