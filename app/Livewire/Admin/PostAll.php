@@ -21,6 +21,10 @@ class PostAll extends Component
     public function render()
     {
         $posts = Post::where('name', 'LIKE', '%' . $this->search . '%')
+        ->orWhere('user_id', 'LIKE', '%' . $this->search . '%')
+        ->orWhereHas('user', function ($query) {
+            $query->where('name', 'LIKE', '%' . $this->search . '%');
+        })
         ->latest('id')
         ->paginate();
 

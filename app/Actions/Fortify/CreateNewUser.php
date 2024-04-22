@@ -35,6 +35,9 @@ class CreateNewUser implements CreatesNewUsers
         // Asignar el rol 'Blogger' al usuario recién creado
         $user->assignRole('Blogger');
 
+        // Asignar el rol 'Publish' al usuario recién creado
+        $user->assignRole('Publish');
+
         return $user;
     }
 }

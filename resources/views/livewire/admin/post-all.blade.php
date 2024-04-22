@@ -1,7 +1,7 @@
 <div class="card">
 
     <div class="card-header">
-        <input wire:model.live="search" class="form-control" placeholder="Ingrese el nombre de un post" />
+        <input wire:model.live="search" class="form-control" placeholder="Ingrese el nombre de un post o autor" />
     </div>
 
     @if ($posts->count())
@@ -11,6 +11,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
+                        <th>Autor</th>
                         <th colspan="2"></th>
                     </tr>
                 </thead>
@@ -27,6 +28,10 @@
                             <!-- Mantiene el tamaño normal en dispositivos grandes -->
                             <td class="d-none d-sm-table-cell">{{ $post->name }}</td>
                             <!-- Mantiene el tamaño normal en dispositivos grandes -->
+
+                            <!-- Mantiene el tamaño normal en dispositivos grandes -->
+                            <td class="d-none d-sm-table-cell"><span class="text-sm">{{ $post->user_id }} </span> :
+                                {{ $post->user->name }}</td>
 
                             <td width="10px">
                                 <a class="btn btn-primary btn-sm"

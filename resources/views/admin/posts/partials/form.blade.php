@@ -56,16 +56,17 @@
     <p class="font-weight-bold">Estado</p>
 
     <label class="mr-2">
-        <input type="radio" id="status_borrador" name="status" value="1" checked
-            {{ old('status') === null && !isset($post) ? 'checked' : old('status', isset($post) && $post->status == 1 ? 'checked' : '') }}>
+        <input type="radio" id="status_borrador" name="status" value="1" checked>
         Borrador
     </label>
 
-    <label>
-        <input type="radio" id="status_publicado" name="status" value="2"
-            {{ old('status', isset($post) && $post->status == 2 ? 'checked' : '') }}>
-        Publicado
-    </label>
+    @can('admin.posts.publish')
+        <label>
+            <input type="radio" id="status_publicado" name="status" value="2"
+                {{ old('status', isset($post) && $post->status == 2 ? 'checked' : '') }}>
+            Publicado
+        </label>
+    @endcan
 
     @error('status')
         <br>
@@ -73,11 +74,12 @@
     @enderror
 </div>
 
+
 <div class="row mb-3">
     <div class="col">
         <div class="image-wraper">
-            @isset ($post->image)
-            <img id="picture" src="{{ Storage::url($post->image->url) }}" alt="alerna">
+            @isset($post->image)
+                <img id="picture" src="{{ Storage::url($post->image->url) }}" alt="alerna">
             @else
                 <img id="picture" src="{{ env('IMG_ALTERNATIVA') }}" alt="alerna">
             @endisset
