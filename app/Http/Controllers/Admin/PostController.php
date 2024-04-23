@@ -10,6 +10,7 @@ use App\Models\Tag;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Asegúrate de importar AuthorizesRequests
 
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -51,6 +52,8 @@ class PostController extends Controller
                 'url' => $url
             ]);
         }
+
+        Cache::flush();
 
         if ($request->tags) {
             $post->tags()->attach($request->tags);
@@ -94,6 +97,8 @@ class PostController extends Controller
             }
         }
     
+        Cache::flush();
+
         if($request->tags)
         {
             $post->tags()->sync($request->tags);

@@ -7,13 +7,25 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Asegúrate de importar AuthorizesRequests
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
     use AuthorizesRequests;
     public function index()
     {
-        $posts = Post::where('status', 2)->latest('id')->paginate(8);
+        if(request()->page){
+            $key = 'posts' . request()->page;
+        }else{
+            $key = 'posts';
+        }
+        
+        if (Cache::has($key)) {
+            $posts = Cache::get($key);
+        } else {
+            $posts  = Post::where('status',2)->latest('id')->paginate(8);
+            Cache::put($key,$posts);
+        }
 
         return view('posts.index', compact('posts'));
     }
